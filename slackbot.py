@@ -27,7 +27,9 @@ Genkan_ch="G5KS3J8LF"
 
 #シリアル通信をする場合に必要な処理：シリアル通信開始の処理
 #各自の環境に応じてシリアル通信のポート名(「/dev/ttyUSB1」のところ)を設定すること
-ser = serial.Serial('/dev/ttyUSB1', 115200)
+#ser = serial.Serial('/dev/ttyUSB1', 115200)
+ser = serial.Serial('/home/dashi119/bin', 115200)
+
 
 app = App(token=SLACK_BOT_TOKEN)
 client = WebClient(SLACK_BOT_TOKEN)
