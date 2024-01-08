@@ -50,7 +50,7 @@ function initialize_webiopi(){
     });
 
     // GPIOの状態を監視しない
-    webiopi().refreshGPIO(false);
+    //webiopi().refreshGPIO(false);
 }
 
 // iOSで画面の回転を検出
@@ -75,7 +75,7 @@ $(function() {
         var ratio = ui.value/sliderMax;
         // サーボの回転の向きを逆にしたい場合次の行を無効に
         ratio = 1.0 - ratio;
-        webiopi().callMacro("setHwPWM", [ratio, commandID++]);
+//        webiopi().callMacro("setHwPWM", [ratio, commandID++]);
     };
 
     // スライダへ設定を適用
@@ -116,7 +116,7 @@ var host = location.host;
 var hostname = host.split(":")[0];
 var port= 9000;
 var URL1 = 'http://' + hostname + ':' + port + '/?action=snapshot';
-var URL2 = 'http://' + hostname + ':8000/bb/06/img/CrawlerControllerTrans.png';
+var URL2 = 'http://' + hostname + '/var/www/html/img/CrawlerControllerTrans.png';
 
 var mTouchWidth;
 var mTouchHeight;
@@ -170,7 +170,7 @@ function touchEvent(e){
 
         // 前回送信時と値が大きく違うときのみ送信
         if(Math.abs(rate-rate24Prev)>th || Math.abs(rate-rate23Prev)>th){
-            webiopi().callMacro("pwm4Write", [0, rate, rate, 0, commandID++]);
+ //           webiopi().callMacro("pwm4Write", [0, rate, rate, 0, commandID++]);
             rate25Prev = 0;
             rate24Prev = rate;
             rate23Prev = rate;
@@ -191,7 +191,7 @@ function touchEvent(e){
 
             // 前回送信時と値が大きく違うときのみ送信
             if(Math.abs(modL-rate25Prev)>th || Math.abs(modR-rate23Prev)>th){
-                webiopi().callMacro("pwm4Write", [modL, 0, modR, 0, commandID++]);
+ //               webiopi().callMacro("pwm4Write", [modL, 0, modR, 0, commandID++]);
                 rate25Prev = modL;
                 rate24Prev = 0;
                 rate23Prev = modR;
@@ -207,7 +207,7 @@ function touchEvent(e){
 
             // 前回送信時と値が大きく違うときのみ送信
             if(Math.abs(modL-rate24Prev)>th || Math.abs(modR-rate22Prev)>th){
-                webiopi().callMacro("pwm4Write", [0, modL, 0, modR, commandID++]);
+ //               webiopi().callMacro("pwm4Write", [0, modL, 0, modR, commandID++]);
                 rate25Prev = 0;
                 rate24Prev = modL;
                 rate23Prev = 0;
@@ -220,7 +220,7 @@ function touchEvent(e){
 
         // 前回送信時と値が大きく違うときのみ送信
         if(Math.abs(rate-rate25Prev)>th || Math.abs(rate-rate22Prev)>th){
-            webiopi().callMacro("pwm4Write", [rate, 0, 0, rate, commandID++]);
+ //           webiopi().callMacro("pwm4Write", [rate, 0, 0, rate, commandID++]);
             rate25Prev = rate;
             rate24Prev = 0;
             rate23Prev = 0;
@@ -234,7 +234,7 @@ function touchEvent(e){
 function touchEndEvent(e){
     e.preventDefault();
 
-    webiopi().callMacro("pwm4Write", [0, 0, 0, 0, commandID++]);
+//    webiopi().callMacro("pwm4Write", [0, 0, 0, 0, commandID++]);
     rate25Prev = 0;
     rate24Prev = 0;
     rate23Prev = 0;
@@ -264,7 +264,7 @@ function clickEvent(e){
     if(e.pageX < mTouchOffsetLeft + mTouchWidth/3){ // 左旋回
         var rate = maxSpeed*(mTouchOffsetLeft + mTouchWidth/3 - e.pageX)/(mTouchWidth/3);
 
-        webiopi().callMacro("pwm4Write", [0, rate, rate, 0, commandID++]);
+ //       webiopi().callMacro("pwm4Write", [0, rate, rate, 0, commandID++]);
         rate25Prev = 0;
         rate24Prev = rate;
         rate23Prev = rate;
@@ -275,7 +275,7 @@ function clickEvent(e){
         var modR = (0.8-1.2)*(e.pageX - mTouchOffsetLeft - mTouchWidth/3)/(mTouchWidth/3) + 1.2;
 
         if(e.pageY >= mTouchOffsetTop + 2*mTouchHeight/5 && e.pageY < mTouchOffsetTop + 3*mTouchHeight/5){
-            webiopi().callMacro("pwm4Write", [0, 0, 0, 0, commandID++]);
+ //           webiopi().callMacro("pwm4Write", [0, 0, 0, 0, commandID++]);
             rate25Prev = 0;
             rate24Prev = 0;
             rate23Prev = 0;
@@ -288,7 +288,7 @@ function clickEvent(e){
             if(modL > 1.0){ modL = 1.0; }
             if(modR > 1.0){ modR = 1.0; }
 
-            webiopi().callMacro("pwm4Write", [modL, 0, modR, 0, commandID++]);
+ //           webiopi().callMacro("pwm4Write", [modL, 0, modR, 0, commandID++]);
             rate25Prev = modL;
             rate24Prev = 0;
             rate23Prev = modR;
@@ -301,7 +301,7 @@ function clickEvent(e){
             if(modL > 1.0){ modL = 1.0; }
             if(modR > 1.0){ modR = 1.0; }
 
-            webiopi().callMacro("pwm4Write", [0, modL, 0, modR, commandID++]);
+//            webiopi().callMacro("pwm4Write", [0, modL, 0, modR, commandID++]);
             rate25Prev = 0;
             rate24Prev = modL;
             rate23Prev = 0;
@@ -311,7 +311,7 @@ function clickEvent(e){
     }else{ // 右旋回
         var rate = maxSpeed*(e.pageX - mTouchOffsetLeft - 2*mTouchWidth/3)/(mTouchWidth/3);
 
-        webiopi().callMacro("pwm4Write", [rate, 0, 0, rate, commandID++]);
+ //       webiopi().callMacro("pwm4Write", [rate, 0, 0, rate, commandID++]);
         rate25Prev = rate;
         rate24Prev = 0;
         rate23Prev = 0;
